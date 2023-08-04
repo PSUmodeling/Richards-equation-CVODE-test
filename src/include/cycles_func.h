@@ -13,6 +13,7 @@ void            Initialize(cycles_struct *, N_Vector, void **);
 int             Ode(realtype, N_Vector, N_Vector, void *);
 void            ReadHydro(forc_struct *);
 void            SetCVodeParam(void *, SUNLinearSolver *, N_Vector, cycles_struct *);
+double          SoilWaterPot(double, double, double, double);
 void            SolveCVode(realtype, void *, N_Vector);
 void            SWC(int, cycles_struct *, void *, N_Vector);
 void            WDfCnd(double, double, double, double, double, double *, double *);
