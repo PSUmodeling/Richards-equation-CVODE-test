@@ -35,6 +35,11 @@ void Initialize(cycles_struct *cycles, N_Vector CV_Y, void **cvode_mem)
     ws->smc[2] = 0.3669;
     ws->smc[3] = 0.3793;
 
+    for (kz = 0; kz < NSOIL; kz++)
+    {
+        ws->potential[kz] = SoilWaterPot(soil->porosity[kz], soil->air_entry_pot[kz], soil->b[kz], ws->smc[kz]);
+    }
+
     // Allocate memory for solver
     *cvode_mem = CVodeCreate(CV_BDF);
     if (*cvode_mem == NULL)
@@ -46,7 +51,7 @@ void Initialize(cycles_struct *cycles, N_Vector CV_Y, void **cvode_mem)
     // Initialize CVode variables
     for (kz = 0; kz < NSOIL; kz++)
     {
-        NV_Ith_S(CV_Y, kz) = ws->smc[kz];
+        NV_Ith_S(CV_Y, kz) = ws->potential[kz];
     }
 
     return;

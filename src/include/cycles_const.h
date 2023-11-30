@@ -5,7 +5,7 @@
 #define NSTEPS                  1440        // number of time steps
 
 #define RELATIVE_ERROR          1.0E-3      // relative error tolerance
-#define ABSOLUTE_ERROR          1.0E-6      // absolute error tolerance (m3/m3)
+#define ABSOLUTE_ERROR          1.0E-4      // absolute error tolerance (m3/m3)
 #define STEPSIZE                1800.0      // step size (s)
 #define INITIAL_STEP            300.0       // initial step size (s)
 

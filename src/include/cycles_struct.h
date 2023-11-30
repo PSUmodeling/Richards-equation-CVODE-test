@@ -9,7 +9,7 @@ typedef struct ctrl_struct
 typedef struct soil_struct
 {
     double          porosity[NSOIL];        // soil porosity (m3 m-3)
-    double          air_entry_pot[NSOIL];   // water potential at air entry (J kg-1)
+    double          air_entry_pot[NSOIL];   // water potential at air entry (m)
     double          b[NSOIL];               // coefficient of moisture tension (-)
     double          ksat[NSOIL];            // saturated conductivity (kg s m-3)
     double          dsat[NSOIL];            // saturated diffusivity (m2 s-1)
@@ -25,6 +25,7 @@ typedef struct phystate_struct
 typedef struct wstate_struct
 {
     double          smc[NSOIL];             // soil water content (m3 m-3)
+    double          potential[NSOIL];       // soil water potential (m)
 } wstate_struct;
 
 typedef struct wflux_struct

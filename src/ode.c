@@ -8,7 +8,7 @@ int Ode(realtype t, N_Vector CV_Y, N_Vector CV_Ydot, void *cycles_data)
     double          wdf, wcnd;
     double          wdf2, wcnd2;
     double          dpsidz, dpsidz2;
-    double          wpot[NSOIL];
+    double          rc[NSOIL];
     cycles_struct  *cycles;
     soil_struct    *soil;
     phystate_struct *phys;
@@ -25,16 +25,18 @@ int Ode(realtype t, N_Vector CV_Y, N_Vector CV_Ydot, void *cycles_data)
 
     for (kz = 0; kz < NSOIL; kz++)
     {
-        ws->smc[kz] = y[kz];
-        wpot[kz] = SoilWaterPot(soil->porosity[kz], soil->air_entry_pot[kz], soil->b[kz], ws->smc[kz]);
+        ws->potential[kz] = y[kz];
+        ws->smc[kz] = SoilWaterContent(soil->porosity[kz], soil->air_entry_pot[kz], soil->b[kz], ws->potential[kz]);
+        rc[kz] = RetentionCapacity(soil->porosity[kz], soil->air_entry_pot[kz], soil->b[kz], ws->potential[kz]);
     }
 
     // Top layer
     WDfCnd(ws->smc[0], soil->porosity[0], soil->dsat[0], soil->ksat[0], soil->b[0], &wdf, &wcnd);
 
-    dpsidz = (wpot[0] - wpot[1]) / (0.5 * (phys->soil_depth[0] + phys->soil_depth[1]));
+    dpsidz = (ws->potential[0] - ws->potential[1]) / (0.5 * (phys->soil_depth[0] + phys->soil_depth[1]));
 
-    dy[0] = (-wcnd * dpsidz - wcnd + wf->infil - wf->soil_evap - wf->uptake[0]) / phys->soil_depth[0];
+    dy[0] = (-wcnd * dpsidz - wcnd + wf->infil - wf->soil_evap - wf->uptake[0]) / phys->soil_depth[0] /
+        RetentionCapacity(soil->porosity[0], soil->air_entry_pot[0], soil->b[0], ws->potential[0]);
 
     // All other layers
     for (kz = 1; kz < NSOIL; kz++)
@@ -48,9 +50,10 @@ int Ode(realtype t, N_Vector CV_Y, N_Vector CV_Ydot, void *cycles_data)
         WDfCnd(ws->smc[kz], soil->porosity[kz], soil->dsat[kz], soil->ksat[kz], soil->b[kz], &wdf2, &wcnd2);
 
         dpsidz2 = (kz == NSOIL - 1) ?
-            0.0 : (wpot[kz] - wpot[kz + 1]) / (0.5 * (phys->soil_depth[kz] + phys->soil_depth[kz + 1]));
+            0.0 : (ws->potential[kz] - ws->potential[kz + 1]) / (0.5 * (phys->soil_depth[kz] + phys->soil_depth[kz + 1]));
 
-        dy[kz] = (-wcnd2 * dpsidz2 - slopx * wcnd2 + wcnd * dpsidz + wcnd - wf->uptake[kz]) / phys->soil_depth[kz];
+        dy[kz] = (-wcnd2 * dpsidz2 - slopx * wcnd2 + wcnd * dpsidz + wcnd - wf->uptake[kz]) / phys->soil_depth[kz] /
+            RetentionCapacity(soil->porosity[kz], soil->air_entry_pot[kz], soil->b[kz], ws->potential[kz]);
 
         if (kz == NSOIL - 1)
         {

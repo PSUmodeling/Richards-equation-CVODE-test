@@ -25,3 +25,29 @@ double SoilWaterPot(double sat_wc, double air_entry_pot, double campbell_b, doub
 
     return -air_entry_pot * pow(factr2, expon);
 }
+
+double SoilWaterContent(double sat_wc, double air_entry_pot, double campbell_b, double pot)
+{
+    double          factr2;
+    double          expon;
+
+    if (pot >= -air_entry_pot) return sat_wc;
+
+    expon = -1.0 / campbell_b;
+    factr2 = -pot / air_entry_pot;
+
+    return sat_wc * pow(factr2, expon);
+}
+
+double RetentionCapacity(double sat_wc, double air_entry_pot, double campbell_b, double pot)
+{
+    double          factr2;
+    double          expon;
+
+    if (pot >= -air_entry_pot) return 1.0E-5;
+
+    expon = -1.0 / campbell_b;
+    factr2 = -pot / air_entry_pot;
+
+    return sat_wc * expon * pow(factr2, expon) / pot;
+}

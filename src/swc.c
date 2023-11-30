@@ -33,7 +33,8 @@ void SWC(int cstep, cycles_struct *cycles, void *cvode_mem, N_Vector CV_Y)
     // Get the solution, and constrain it to be between 0.02 and porosity
     for (kz = 0; kz < NSOIL; kz++)
     {
-        ws->smc[kz] = NV_Ith_S(CV_Y, kz) + wplus / phys->soil_depth[kz];
+        ws->smc[kz] = SoilWaterContent(soil->porosity[kz], soil->air_entry_pot[kz], soil->b[kz], NV_Ith_S(CV_Y, kz)) +
+            wplus / phys->soil_depth[kz];
 
         if (ws->smc[kz] > 0.02)
         {
