@@ -20,23 +20,11 @@ void Initialize(cycles_struct *cycles, N_Vector CV_Y, void **cvode_mem)
 
     ctrl->stepsize = STEPSIZE;
 
-    phys->zsoil[0] = -0.1;
-    phys->zsoil[1] = -0.4;
-    phys->zsoil[2] = -1.0;
-    phys->zsoil[3] = -2.0;
-
-    phys->soil_depth[0] = 0.1;
-    phys->soil_depth[1] = 0.3;
-    phys->soil_depth[2] = 0.6;
-    phys->soil_depth[3] = 1.0;
-
-    ws->smc[0] = 0.3568;
-    ws->smc[1] = 0.3601;
-    ws->smc[2] = 0.3669;
-    ws->smc[3] = 0.3793;
-
     for (kz = 0; kz < NSOIL; kz++)
     {
+        phys->zsoil[kz] = -0.1 * (kz + 1);
+        phys->soil_depth[kz] = 0.1;
+        ws->smc[kz] = (kz < 2) ? 0.3568 : 0.464;
         ws->potential[kz] = SoilWaterPot(soil->porosity[kz], soil->air_entry_pot[kz], soil->b[kz], ws->smc[kz]);
     }
 

@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     SUNLinearSolver sun_ls;
     cycles_struct   cycles;
     int             kstep;
+    int             kz;
     FILE           *fp;
 
 #if defined(unix) || defined(__unix__) || defined(__unix)
@@ -35,13 +36,20 @@ int main(int argc, char *argv[])
 
     // Open output file and write header
     fp = fopen("cycles.txt", "w");
-    fprintf(fp, "step,smc0,smc1,smc2,smc3,psi0,psi1,psi2,psi3\n");
+    fprintf(fp, "step");
+    for (kz = 0; kz < NSOIL; kz++)
+    {
+        fprintf(fp, ",smc%d", kz);
+    }
+    for (kz = 0; kz < NSOIL; kz++)
+    {
+        fprintf(fp, ",psi%d", kz);
+    }
+    fprintf(fp, "\n");
 
     // Run model
     for (kstep = 0; kstep < NSTEPS; kstep++)
     {
-        int             kz;
-
         // Run soil moisture time step
         SWC(kstep, &cycles, cvode_mem, CV_Y);
 
@@ -53,7 +61,7 @@ int main(int argc, char *argv[])
         }
         for (kz = 0; kz < NSOIL; kz++)
         {
-            fprintf(fp, ",%.2lf", cycles.ws.potential[kz]);
+            fprintf(fp, ",%.3lf", cycles.ws.potential[kz]);
         }
         fprintf(fp, "\n");
     }
