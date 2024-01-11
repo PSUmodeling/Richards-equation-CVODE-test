@@ -15,7 +15,7 @@ void WDfCnd(double smc, double smcmax, double dwsat, double dksat, double bexp, 
     return;
 }
 
-double SoilWaterPot(double sat_wc, double air_entry_pot, double campbell_b, double wc)
+double SoilWaterPotential(double sat_wc, double air_entry_pot, double campbell_b, double wc)
 {
     double          factr2;
     double          expon;

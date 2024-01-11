@@ -42,6 +42,7 @@ __pycache__
 
 # Input/Output files
 /input
+/tmp
 cycles*.txt
 
 # Third party libraries

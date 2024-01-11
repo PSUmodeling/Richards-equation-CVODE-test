@@ -1,6 +1,6 @@
 #include "cycles.h"
 
-void ReadHydro(forc_struct *forc)
+void ReadHydro(forcing_struct *forcing)
 {
     char            cmdstr[MAXSTRING];
     int             lno = 0;
@@ -21,10 +21,10 @@ void ReadHydro(forc_struct *forc)
 
         NextLine(fp, cmdstr, &lno);
         sscanf(cmdstr, "%*d %*d %lf %*lf %*lf %lf %*lf %*lf %*lf %*lf %lf %lf",
-            &precip, &runoff, &forc->soil_evap[k], &forc->uptake[k]);
-        forc->infil[k] = (precip - runoff) / 1000.0 / 1800.0;   // from mm to m/s
-        forc->soil_evap[k] /=  1000.0 * 1800.0;
-        forc->uptake[k] /= 1000.0 * 1800.0;
+            &precip, &runoff, &forcing->soil_evaporation[k], &forcing->uptake[k]);
+        forcing->infiltration[k] = (precip - runoff) / 1000.0 / 1800.0;   // from mm to m/s
+        forcing->soil_evaporation[k] /=  1000.0 * 1800.0;
+        forcing->uptake[k] /= 1000.0 * 1800.0;
     }
 
     fclose(fp);

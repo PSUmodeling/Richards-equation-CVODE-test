@@ -52,6 +52,7 @@ SRCS_ = \
 	initialize.c \
 	ode.c \
 	read_hydro.c \
+	read_input.c \
 	soil.c \
 	swc.c
 

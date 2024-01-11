@@ -217,3 +217,26 @@ void FindLine(FILE *fp, const char *token, int *lno, const char *fn)
     fflush(stderr);
     exit(EXIT_FAILURE);
 }
+
+void ReadMultipleValues(const char buffer[], int number_of_values, char type, void *value)
+{
+    int             k;
+    int             bytes_now;
+    int             bytes_consumed = 0;
+
+    for (k = 0; k < number_of_values; k++)
+    {
+        switch (type)
+        {
+            case 'd':
+                sscanf(buffer + bytes_consumed, "%lf%n", (double *)value + k, &bytes_now);
+                break;
+            case 'i':
+                sscanf(buffer + bytes_consumed, "%d%n", (int *) value + k, &bytes_now);
+                break;
+            default:
+                break;
+        }
+        bytes_consumed += bytes_now;
+    }
+}
