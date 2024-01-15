@@ -45,9 +45,9 @@ void SWC(int cstep, cycles_struct *cycles, void *cvode_mem, N_Vector CV_Y)
 
         for (kz = 0; kz < number_of_layers; kz++)
         {
+            ws->potential[kz] = NV_Ith_S(CV_Y, INDEX(kx, kz));
             ws->smc[kz] =
-                SoilWaterContent(soil->porosity[kz], soil->air_entry_potential[kz], soil->b[kz], NV_Ith_S(CV_Y, kz)) +
-                wplus / phys->soil_depth[kz];
+                SoilWaterContent(soil->porosity[kz], soil->air_entry_potential[kz], soil->b[kz], ws->potential[kz]) + wplus / phys->soil_depth[kz];
 
             if (ws->smc[kz] > 0.02)
             {
@@ -66,5 +66,4 @@ void SWC(int cstep, cycles_struct *cycles, void *cvode_mem, N_Vector CV_Y)
 
         runoff3 = wplus;
     }
-
 }

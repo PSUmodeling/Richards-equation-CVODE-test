@@ -1,18 +1,25 @@
 #include "cycles.h"
 
-void WDfCnd(double smc, double smcmax, double dwsat, double dksat, double bexp, double *wdf, double *wcnd)
+double WaterDiffusivity(double smc, double smcmax, double dwsat, double bexp)
 {
     double          factr2;
     double          expon;
 
     factr2 = MIN(1.0, MAX(0.0, smc / smcmax));
     expon = bexp + 2.0;
-    *wdf = dwsat * pow(factr2, expon);
 
+    return dwsat * pow(factr2, expon);
+}
+
+double WaterConductivity(double smc, double smcmax, double dksat, double bexp)
+{
+    double          factr2;
+    double          expon;
+
+    factr2 = MIN(1.0, MAX(0.0, smc / smcmax));
     expon = 2.0 * bexp + 3.0;
-    *wcnd = dksat * pow(factr2, expon);
 
-    return;
+    return  dksat * pow(factr2, expon);
 }
 
 double SoilWaterPotential(double sat_wc, double air_entry_pot, double campbell_b, double wc)

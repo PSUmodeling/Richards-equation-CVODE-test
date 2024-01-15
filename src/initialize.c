@@ -2,18 +2,21 @@
 
 void Initialize(cycles_struct *cycles, N_Vector CV_Y, void **cvode_mem)
 {
-    int             kx, kz;
-    soil_struct    *soil;
-    phystate_struct *phys;
+    int             kx;
     control_struct *control = &cycles->control;
-    wstate_struct  *ws;
 
     control->stepsize = STEPSIZE;
 
     for (kx = 0; kx < number_of_columns; kx++)
     {
+        int             kz;
+        soil_struct    *soil;
+        wstate_struct  *ws;
+        wflux_struct   *wf;
+
         soil = &cycles->grid[kx].soil;
         ws = &cycles->grid[kx].ws;
+        wf = &cycles->grid[kx].wf;
 
         for (kz = 0; kz < number_of_layers; kz++)
         {
@@ -22,6 +25,8 @@ void Initialize(cycles_struct *cycles, N_Vector CV_Y, void **cvode_mem)
 
             // Initialize CVode variables
             NV_Ith_S(CV_Y, INDEX(kx, kz)) = ws->potential[kz];
+
+            wf->lateral[kz] = 0.0;
         }
     }
 

@@ -12,6 +12,7 @@
 
 void            CheckCVodeFlag(int);
 void            Initialize(cycles_struct *, N_Vector, void **);
+double          LateralFlux(double, double, double, double, double, double, double, double, double);
 int             Ode(realtype, N_Vector, N_Vector, void *);
 void            ReadDomain(const char [], control_struct *);
 void            ReadHydro(forcing_struct *);
@@ -24,6 +25,7 @@ double          SoilWaterContent(double, double, double, double);
 double          SoilWaterPotential(double, double, double, double);
 void            SolveCVode(realtype, void *, N_Vector);
 void            SWC(int, cycles_struct *, void *, N_Vector);
-void            WDfCnd(double, double, double, double, double, double *, double *);
+double          WaterDiffusivity(double, double, double, double);
+double          WaterConductivity(double, double, double, double);
 
 #endif
