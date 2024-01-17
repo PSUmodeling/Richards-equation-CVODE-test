@@ -1,0 +1,3 @@
+10      # number of columns
+20      # number of layers
+0.1     # layer depth (m)

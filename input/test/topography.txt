@@ -1,0 +1,7 @@
+3.6     3.2     2.8     2.4     2.0     1.6     1.2     0.8     0.4     0                   # Elevation (m)
+1       1       1       1       1       1       1       1       1       1                   # Width (m)
+10                                                                                          # Channel length (m)
+0.5                                                                                         # Channel width (m)
+-0.4                                                                                        # Bed elevation at center of channel(m)
+0.1                                                                                         # Channel slope (-)
+0.04                                                                                        # Channel roughness (s/(m1/3))

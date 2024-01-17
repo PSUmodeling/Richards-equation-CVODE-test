@@ -40,10 +40,10 @@ __pycache__
 # Winmerge backups
 *.bak
 
-# Input/Output files
-/input
+# Output files
 /tmp
-cycles*.txt
+/*.txt
+/*.gif
 
 # Third party libraries
 third_party
