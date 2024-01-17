@@ -14,7 +14,6 @@ typedef struct soil_struct
     double         *b;                      // coefficient of moisture tension (-)
     double         *ksath;                  // saturated horizontal conductivity (kg s m-3)
     double         *ksatv;                  // saturated vertical conductivity (kg s m-3)
-    double         *dsat;                   // saturated diffusivity (m2 s-1)
 } soil_struct;
 
 typedef struct phystate_struct
@@ -41,16 +40,31 @@ typedef struct wflux_struct
 
 typedef struct forcing_struct
 {
-    double          uptake[NSTEPS];
-    double          soil_evaporation[NSTEPS];
-    double          infiltration[NSTEPS];
+    double          uptake[NUMBER_OF_STEPS];
+    double          soil_evaporation[NUMBER_OF_STEPS];
+    double          infiltration[NUMBER_OF_STEPS];
 } forcing_struct;
 
-typedef struct river_struct
+typedef struct channel_phystate_struct
 {
-    double          width;                  // river width (m)
-    double          depth;                  // river depth (m)
-} river_struct;
+    double          length;                 // channel length (m)
+    double          width;                  // channel width (m)
+    double          bed_elevation;          // channel bed elevation (m)
+    double          slope;                  // channel slope (-)
+    double          roughness;              // channel roughness (s m-1/3)
+} channel_phystate_struct;
+
+typedef struct channel_wstate_struct
+{
+    double          stage;                  // channel stage (m)
+} channel_wstate_struct;
+
+typedef struct channel_wflux_struct
+{
+    double          surface;                // surface flux from soil column (m/s)
+    double          subsurface;             // subsurface flux from soil column (m/s)
+    double          discharge;              // channel discharge (m/s)
+} channel_wflux_struct;
 
 typedef struct grid_struct
 {
@@ -60,12 +74,27 @@ typedef struct grid_struct
     phystate_struct phys;
 } grid_struct;
 
+typedef struct channel_struct
+{
+    channel_phystate_struct phys;
+    channel_wstate_struct ws;
+    channel_wflux_struct wf;
+} channel_struct;
+
+typedef struct output_struct
+{
+    FILE*           smc;
+    FILE*           wp;
+    FILE*           channel;
+} output_struct;
+
 typedef struct cycles_struct
 {
     control_struct  control;
     forcing_struct  forcing;
-    river_struct    river;
+    channel_struct  channel;
     grid_struct    *grid;
+    output_struct   output;
 } cycles_struct;
 
 #endif

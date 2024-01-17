@@ -1,6 +1,6 @@
 #include "cycles.h"
 
-void ReadHydro(forcing_struct *forcing)
+void ReadHydrologicalForcing(forcing_struct *forcing)
 {
     char            cmdstr[MAXSTRING];
     int             lno = 0;
@@ -15,7 +15,7 @@ void ReadHydro(forcing_struct *forcing)
     // Read in site information and count number of weather records
     NextLine(fp, cmdstr, &lno);
 
-    for (k = 0; k < NSTEPS; k++)
+    for (k = 0; k < NUMBER_OF_STEPS; k++)
     {
         double          precip, runoff;
 

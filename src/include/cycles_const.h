@@ -1,7 +1,7 @@
 #ifndef CYCLES_CONST_HEADER
 #define CYCLES_CONST_HEADER
 
-#define NSTEPS                  1440        // number of time steps
+#define NUMBER_OF_STEPS         1440        // number of time steps
 
 #define RELATIVE_ERROR          1.0E-3      // relative error tolerance
 #define ABSOLUTE_ERROR          1.0E-4      // absolute error tolerance (m3/m3)

@@ -1,6 +1,6 @@
 #include "cycles.h"
 
-void SetCVodeParam(void *cvode_mem, SUNLinearSolver *sun_ls, N_Vector CV_Y, cycles_struct *cycles)
+void SetCVodeParameters(void *cvode_mem, SUNLinearSolver *sun_ls, N_Vector CV_Y, cycles_struct *cycles)
 {
     int             cv_flag;
     static int      reset;

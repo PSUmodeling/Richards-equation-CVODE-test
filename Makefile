@@ -47,14 +47,15 @@ LFLAGS = -lsundials_cvode -L$(CVODE_LIB) -lsundials_nvecserial
 
 SRCS_ = \
 	main.c \
+	cleanup.c \
 	custom_io.c \
 	cvode_funcs.c \
 	initialize.c \
-	ode.c \
 	read_hydro.c \
 	read_input.c \
 	soil.c \
-	swc.c
+	swc.c \
+	output.c
 
 HEADERS_ = \
 	custom_io.h \

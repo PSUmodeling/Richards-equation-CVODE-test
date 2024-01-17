@@ -16,7 +16,7 @@ void ReadDomain(const char file_name[], control_struct *control)
     NextLine(fp, cmdstr, &lno);
     sscanf(cmdstr, "%d", &number_of_layers);
 
-    // Read layer depth
+    // Read layer bed_elevation
     NextLine(fp, cmdstr, &lno);
     sscanf(cmdstr, "%lf", &control->layer_depth);
 
@@ -29,8 +29,8 @@ void ReadTopography(const char file_name[], cycles_struct *cycles)
     int             kz;
     char            cmdstr[MAXSTRING];
     int             lno = 0;
-    double          *elevation;
-    double          *width;
+    double         *elevation;
+    double         *width;
     FILE           *fp;
 
     fp = cycles_fopen(file_name, "r");
@@ -65,10 +65,23 @@ void ReadTopography(const char file_name[], cycles_struct *cycles)
     }
 
     NextLine(fp, cmdstr, &lno);
-    sscanf(cmdstr, "%lf", &cycles->river.depth);
+    sscanf(cmdstr, "%lf", &cycles->channel.phys.length);
 
     NextLine(fp, cmdstr, &lno);
-    sscanf(cmdstr, "%lf", &cycles->river.width);
+    sscanf(cmdstr, "%lf", &cycles->channel.phys.width);
+
+    NextLine(fp, cmdstr, &lno);
+    sscanf(cmdstr, "%lf", &cycles->channel.phys.bed_elevation);
+
+    NextLine(fp, cmdstr, &lno);
+    sscanf(cmdstr, "%lf", &cycles->channel.phys.slope);
+
+    NextLine(fp, cmdstr, &lno);
+    sscanf(cmdstr, "%lf", &cycles->channel.phys.roughness);
+
+    free(elevation);
+    free(width);
+    fclose(fp);
 }
 
 void ReadSoil(const char file_name[], int parameter, cycles_struct *cycles)
@@ -117,5 +130,6 @@ void ReadSoil(const char file_name[], int parameter, cycles_struct *cycles)
         }
     }
 
+    free(value);
     fclose(fp);
 }

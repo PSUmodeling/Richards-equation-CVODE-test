@@ -8,24 +8,36 @@
 #define MAX(x, y)               (((x) > (y)) ? (x) : (y))
 #define MIN(x, y)               (((x) < (y)) ? (x) : (y))
 
-#define INDEX(kx, kz)           ((kz) + (kx) * number_of_layers)
+#define INDEX(kx, kz)           ((kz) + (kx) * number_of_layers)        // index of state variable for column kx and layer kz
+#define CHANNEL                 (number_of_columns * number_of_layers)  // index of channel state variable
 
 void            CheckCVodeFlag(int);
+void            Cleanup(cycles_struct *);
+void            CloseOutputFiles(output_struct *);
+double          Discharge(channel_struct *);
+void            GenerateGrids(cycles_struct *);
 void            Initialize(cycles_struct *, N_Vector, void **);
 double          LateralFlux(double, double, double, double, double, double, double, double, double);
 int             Ode(realtype, N_Vector, N_Vector, void *);
+void            OpenOutputFiles(output_struct *);
 void            ReadDomain(const char [], control_struct *);
-void            ReadHydro(forcing_struct *);
+void            ReadHydrologicalForcing(forcing_struct *);
 void            ReadMultipleValues(const char [], int, char, void *);
 void            ReadSoil(const char [], int, cycles_struct *);
 void            ReadTopography(const char [], cycles_struct *);
 double          RetentionCapacity(double, double, double, double);
-void            SetCVodeParam(void *, SUNLinearSolver *, N_Vector, cycles_struct *);
+void            SetCVodeParameters(void *, SUNLinearSolver *, N_Vector, cycles_struct *);
 double          SoilWaterContent(double, double, double, double);
 double          SoilWaterPotential(double, double, double, double);
 void            SolveCVode(realtype, void *, N_Vector);
+double          SubsurfaceToChannel(int, const channel_struct *, const grid_struct *);
 void            SWC(int, cycles_struct *, void *, N_Vector);
+double          TotalWaterFlux(grid_struct *, channel_struct *);
+double          TotalWaterStorage(grid_struct *, channel_struct *);
+void            UpdateStateVariables(N_Vector, cycles_struct *);
 double          WaterDiffusivity(double, double, double, double);
 double          WaterConductivity(double, double, double, double);
+void            WriteOutputFiles(int, const grid_struct *, const channel_struct *, output_struct *);
+void            ZeroFluxes(N_Vector, cycles_struct *);
 
 #endif
