@@ -4,21 +4,17 @@
 void SWC(int cstep, cycles_struct *cycles, void *cvode_mem, N_Vector CV_Y)
 {
     double              t;
-    double              storage_before;
-    double              storage_after;
     int                 kx;
     forcing_struct     *forcing = &cycles->forcing;
 
     t = (cstep + 1) * cycles->control.stepsize;
 
-    storage_before = TotalWaterStorage(cycles->grid, &cycles->channel);
-
     for (kx = 0; kx < number_of_columns; kx++)
     {
-        int                 kz;
-        double              total_depth = 0.0;
-        wflux_struct       *wf = &cycles->grid[kx].wf;
-        phystate_struct    *phys = &cycles->grid[kx].phys;
+        int             kz;
+        double          total_depth = 0.0;
+        wflux_struct   *wf = &cycles->grid[kx].wf;
+        phystate_struct *phys = &cycles->grid[kx].phys;
 
         wf->infiltration = forcing->infiltration[cstep];
         wf->soil_evaporation = forcing->soil_evaporation[cstep];
@@ -43,12 +39,12 @@ void SWC(int cstep, cycles_struct *cycles, void *cvode_mem, N_Vector CV_Y)
     // Get the solution, and constrain it to be between 0.02 and porosity
     for (kx = 0; kx < number_of_columns; kx++)
     {
-        int                 kz;
-        double              wplus = 0.0;
-        double              runoff3 = 0.0;
-        wstate_struct      *ws = &cycles->grid[kx].ws;
-        soil_struct        *soil = &cycles->grid[kx].soil;
-        phystate_struct    *phys = &cycles->grid[kx].phys;
+        int             kz;
+        double          wplus = 0.0;
+        double          runoff3 = 0.0;
+        wstate_struct  *ws = &cycles->grid[kx].ws;
+        soil_struct    *soil = &cycles->grid[kx].soil;
+        phystate_struct *phys = &cycles->grid[kx].phys;
 
         for (kz = 0; kz < number_of_layers; kz++)
         {
@@ -71,11 +67,6 @@ void SWC(int cstep, cycles_struct *cycles, void *cvode_mem, N_Vector CV_Y)
 
         runoff3 = wplus;
     }
-
-    storage_after = TotalWaterStorage(cycles->grid, &cycles->channel);
-
-    printf("t = %lf, storage before = %lf, storage after = %lf, error = %lf%%\n", t, storage_before, storage_after,
-        (1.0 - storage_after / (storage_before + TotalWaterFlux(cycles->grid, &cycles->channel) * cycles->control.stepsize)) * 100.0);
 }
 
 int Ode(realtype t, N_Vector CV_Y, N_Vector CV_Ydot, void *cycles_data)
