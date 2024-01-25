@@ -30,6 +30,7 @@ void            SetCVodeParameters(void *, SUNLinearSolver *, N_Vector, cycles_s
 double          SoilWaterContent(double, double, double, double);
 double          SoilWaterPotential(double, double, double, double);
 void            SolveCVode(realtype, void *, N_Vector);
+void            StoreOutput(const grid_struct *grid, const channel_struct *channel, output_struct *output);
 double          SubsurfaceToChannel(int, const channel_struct *, const grid_struct *);
 void            SWC(int, cycles_struct *, void *, N_Vector);
 double          TotalWaterFlux(grid_struct *, channel_struct *);
@@ -37,7 +38,7 @@ double          TotalWaterStorage(grid_struct *, channel_struct *);
 void            UpdateStateVariables(N_Vector, cycles_struct *);
 double          WaterDiffusivity(double, double, double, double);
 double          WaterConductivity(double, double, double, double);
-void            WriteOutputFiles(int, const grid_struct *, const channel_struct *, output_struct *);
+void            WriteOutputFiles(int kstep, int nstep, output_struct *output);
 void            ZeroFluxes(N_Vector, cycles_struct *);
 
 #endif

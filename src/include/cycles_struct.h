@@ -3,7 +3,8 @@
 
 typedef struct control_struct
 {
-    double          stepsize;               // step size (s)
+    int             stepsize;               // step size (s)
+    int             solver_stepsize;        // solver step size (s)
     double          layer_depth;            // soil layer thickness (m)
 } control_struct;
 
@@ -83,9 +84,12 @@ typedef struct channel_struct
 
 typedef struct output_struct
 {
-    FILE*           smc;
-    FILE*           wp;
-    FILE*           channel;
+    double         *smc;
+    FILE*           smc_fp;
+    double         *wp;
+    FILE*           wp_fp;
+    double         *channel;
+    FILE*           channel_fp;
 } output_struct;
 
 typedef struct cycles_struct

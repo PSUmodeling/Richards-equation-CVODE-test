@@ -32,6 +32,7 @@ void Initialize(cycles_struct *cycles, N_Vector CV_Y, void **cvode_mem)
     control_struct *control = &cycles->control;
 
     control->stepsize = STEPSIZE;
+    control->solver_stepsize = SOLVER_STEPSIZE;
 
     for (kx = 0; kx < number_of_columns; kx++)
     {
