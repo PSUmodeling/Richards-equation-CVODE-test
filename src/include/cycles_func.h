@@ -8,7 +8,7 @@
 #define MAX(x, y)               (((x) > (y)) ? (x) : (y))
 #define MIN(x, y)               (((x) < (y)) ? (x) : (y))
 
-#define INDEX(kx, kz)           ((kz) + (kx) * number_of_layers)        // index of state variable for column kx and layer kz
+#define SUBSURFACE(kx, kz)      ((kz) + (kx) * number_of_layers)        // index of state variable for column kx and layer kz
 #define CHANNEL                 (number_of_columns * number_of_layers)  // index of channel state variable
 
 void            CheckCVodeFlag(int);

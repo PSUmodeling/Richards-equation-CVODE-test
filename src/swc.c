@@ -162,7 +162,7 @@ int Ode(realtype t, N_Vector CV_Y, N_Vector CV_Ydot, void *cycles_data)
         wf->uptake[0] = 0.0;
 #endif
 
-        NV_Ith_S(CV_Ydot, INDEX(kx, 0)) = (-wcnd * dpsidz - wcnd + wf->infiltration - wf->soil_evaporation - wf->uptake[0] + wf->lateral[0]) / phys->soil_depth[0] /
+        NV_Ith_S(CV_Ydot, SUBSURFACE(kx, 0)) = (-wcnd * dpsidz - wcnd + wf->infiltration - wf->soil_evaporation - wf->uptake[0] + wf->lateral[0]) / phys->soil_depth[0] /
             RetentionCapacity(soil->porosity[0], soil->air_entry_potential[0], soil->b[0], ws->potential[0]);
 
         // All other layers
@@ -178,7 +178,7 @@ int Ode(realtype t, N_Vector CV_Y, N_Vector CV_Ydot, void *cycles_data)
 #ifdef TEST
             wf->uptake[kz] = 0.0;
 #endif
-            NV_Ith_S(CV_Ydot, INDEX(kx, kz)) = (-wcnd2 * dpsidz2 - ((kz == number_of_layers - 1) ? 0.0 : 1.0) * wcnd2 + wcnd * dpsidz + wcnd - wf->uptake[kz] + wf->lateral[kz]) / phys->soil_depth[kz] /
+            NV_Ith_S(CV_Ydot, SUBSURFACE(kx, kz)) = (-wcnd2 * dpsidz2 - ((kz == number_of_layers - 1) ? 0.0 : 1.0) * wcnd2 + wcnd * dpsidz + wcnd - wf->uptake[kz] + wf->lateral[kz]) / phys->soil_depth[kz] /
                 RetentionCapacity(soil->porosity[kz], soil->air_entry_potential[kz], soil->b[kz], ws->potential[kz]);
 
             if (kz != number_of_layers - 1)
@@ -289,7 +289,7 @@ void UpdateStateVariables(N_Vector CV_Y, cycles_struct *cycles)
 
         for (kz = 0; kz < number_of_layers; kz++)
         {
-            ws->potential[kz] = NV_Ith_S(CV_Y, INDEX(kx, kz));
+            ws->potential[kz] = NV_Ith_S(CV_Y, SUBSURFACE(kx, kz));
             ws->smc[kz] = SoilWaterContent(soil->porosity[kz], soil->air_entry_potential[kz], soil->b[kz], ws->potential[kz]);
         }
     }
@@ -309,7 +309,7 @@ void ZeroFluxes(N_Vector CV_Ydot, cycles_struct *cycles)
         for (kz = 0; kz < number_of_layers; kz++)
         {
             wf->lateral[kz] = 0.0;
-            NV_Ith_S(CV_Ydot, INDEX(kx, kz)) = 0.0;
+            NV_Ith_S(CV_Ydot, SUBSURFACE(kx, kz)) = 0.0;
         }
     }
 

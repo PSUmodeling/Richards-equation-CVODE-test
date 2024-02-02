@@ -47,7 +47,7 @@ void Initialize(cycles_struct *cycles, N_Vector CV_Y, void **cvode_mem)
         {
             // Initialize CVode variables for soil columns
             ws->potential[kz] = SoilWaterPotential(soil->porosity[kz], soil->air_entry_potential[kz], soil->b[kz], ws->smc[kz]);
-            NV_Ith_S(CV_Y, INDEX(kx, kz)) = ws->potential[kz];
+            NV_Ith_S(CV_Y, SUBSURFACE(kx, kz)) = ws->potential[kz];
         }
     }
 

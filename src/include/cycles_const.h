@@ -6,7 +6,7 @@
 #define RELATIVE_ERROR          1.0E-3      // relative error tolerance
 #define ABSOLUTE_ERROR          1.0E-4      // absolute error tolerance (m3/m3)
 #define STEPSIZE                1800        // step size (s)
-#define SOLVER_STEPSIZE         300         // solver step size (s)
+#define SOLVER_STEPSIZE         60         // solver step size (s)
 #define INITIAL_STEP            300.0       // initial step size (s)
 
 #define B                       0

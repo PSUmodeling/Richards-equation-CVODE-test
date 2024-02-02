@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     ReadSoil("input/test/initial_condition.txt", INITIAL_CONDITION, &cycles);
 
     // Create CVode state variable array
-    CV_Y = N_VNew_Serial(number_of_columns * number_of_layers + 1);
+    CV_Y = N_VNew_Serial(number_of_columns * number_of_layers + 1 + 1);
     if (CV_Y == NULL)
     {
         printf("Error creating CVode state variable vector.\n");
