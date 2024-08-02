@@ -44,11 +44,9 @@ void SetCVodeParam(void *cvode_mem, SUNLinearSolver *sun_ls, N_Vector CV_Y, cycl
         cv_flag = CVodeSetMaxStep(cvode_mem, (realtype)cycles->ctrl.stepsize);
         CheckCVodeFlag(cv_flag);
 
-#if TEMP_DISABLED
         // Specifies the maximum number of steps to be taken by the solver in its attempt to reach the next output time
         cv_flag = CVodeSetMaxNumSteps(cvode_mem, 0);//cycles->ctrl.stepsize * 100000);
         CheckCVodeFlag(cv_flag);
-#endif
     }
 }
 

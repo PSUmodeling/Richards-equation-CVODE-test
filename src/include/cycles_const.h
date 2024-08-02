@@ -1,7 +1,7 @@
 #ifndef CYCLES_CONST_HEADER
 #define CYCLES_CONST_HEADER
 
-#define NSOIL                   4           // number of soil layers
+#define NSOIL                   20          // number of soil layers
 #define NSTEPS                  1440        // number of time steps
 
 #define RELATIVE_ERROR          1.0E-3      // relative error tolerance
