@@ -20,4 +20,12 @@ void            SolveCVode(realtype, void *, N_Vector);
 void            SWC(int, cycles_struct *, void *, N_Vector);
 void            WDfCnd(double, double, double, double, double, double *, double *);
 
+double CapillaryDrive(double bexp, double air_entry_potential, double swc_b, double swc);
+double DryDepth(double dt, const soil_struct *soil, const phystate_struct *phys, double swc_b);
+void WettingFrontPosition(const phystate_struct *phys,  int *layer, double wetting_front_thickness[]);
+double SoilMoistureAtWettingFront(int layer, double wetting_front_thickness, double soil_depth, double swc_b, double swc, double smcmax);
+double InfiltrationCapacity(const soil_struct *soil, const phystate_struct *phys, int n, const double wetting_front_thickness[]);
+double CompositeConductivity(int n, double wetting_front_depth, const double wetting_front_thickness[], const double swc[], const soil_struct *soil);
+double WettingFrontAdvanceRate(int n, double wetting_front_depth, const double wetting_front_thickness[], double swc_b, const double swc_wf[], const soil_struct *soil);
+
 #endif

@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     // Open output file and write header
     fp = fopen("cycles.txt", "w");
-    fprintf(fp, "step,smc0,smc1,smc2,smc3,psi0,psi1,psi2,psi3\n");
+    fprintf(fp, "step,smc0,smc1,smc2,smc3,psi0,psi1,psi2,psi3,prcp,infil,wf,runoff,drainage\n");
 
     // Run model
     for (kstep = 0; kstep < NSTEPS; kstep++)
@@ -55,6 +55,11 @@ int main(int argc, char *argv[])
         {
             fprintf(fp, ",%.2lf", cycles.ws.potential[kz]);
         }
+        fprintf(fp, ",%.2le", cycles.wf.precipitation);
+        fprintf(fp, ",%.2le", cycles.wf.infil);
+        fprintf(fp, ",%.3lf", cycles.phys.wetting_front_depth);
+        fprintf(fp, ",%.3le", cycles.wf.runoff);
+        fprintf(fp, ",%.3le", cycles.wf.drainage);
         fprintf(fp, "\n");
     }
 

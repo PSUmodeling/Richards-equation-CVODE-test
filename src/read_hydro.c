@@ -22,6 +22,7 @@ void ReadHydro(forc_struct *forc)
         NextLine(fp, cmdstr, &lno);
         sscanf(cmdstr, "%*d %*d %lf %*lf %*lf %lf %*lf %*lf %*lf %*lf %lf %lf",
             &precip, &runoff, &forc->soil_evap[k], &forc->uptake[k]);
+        forc->precipitation[k] = precip / 1000.0 / 1800.0;   // from mm to m/s
         forc->infil[k] = (precip - runoff) / 1000.0 / 1800.0;   // from mm to m/s
         forc->soil_evap[k] /=  1000.0 * 1800.0;
         forc->uptake[k] /= 1000.0 * 1800.0;
